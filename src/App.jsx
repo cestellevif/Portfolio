@@ -1,11 +1,10 @@
 import { LINES } from './data/projects.js'
+import MainStation from './components/MainStation/MainStation.jsx'
 
 export default function App() {
   return (
     <div className="app">
-      {LINES.map(line => (
-        <div key={line.id}>{line.label}</div>
-      ))}
+      <MainStation lines={LINES} />
     </div>
   )
 }
