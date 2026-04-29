@@ -1,0 +1,59 @@
+/* src/styles/globals.css */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Line colors */
+  --color-red: #E3000F;
+  --color-blue: #003DA5;
+  --color-yellow: #FFD700;
+
+  /* Surface colors */
+  --color-charcoal: #2D2D2D;
+  --color-hub: #B5451B;
+  --color-cream: #FAF7F0;
+  --color-cream-deep: #F0EBE0;  /* yellow section — slightly deeper cream */
+  --color-white: #FFFFFF;
+  --color-ink: #1A1A1A;
+
+  /* Typography */
+  --font-display: 'Staatliches', sans-serif;
+  --font-body: 'DM Mono', monospace;
+
+  /* Spine */
+  --spine-x: 120px;
+  --spine-width: 10px;
+
+  /* Dots */
+  --station-dot-size: 28px;
+  --substop-dot-size: 14px;
+
+  /* Arms */
+  --arm-length: 240px;
+  --arm-width: 4px;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: auto; /* GSAP handles all scroll behavior */
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-cream);  /* whole site is cream — poster on cream stock */
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+/* Reduced motion — show all content immediately, no animation */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
