@@ -1,0 +1,55 @@
+.substop {
+  position: absolute;
+  left: var(--spine-x);
+  display: flex;
+  align-items: center;
+  opacity: 0; /* GSAP reveals this */
+  /* bottom position set via inline style */
+}
+
+/* The arm — grows outward (left to right) from spine */
+.substop__arm {
+  width: var(--arm-length);
+  height: var(--arm-width);
+  background: var(--line-color);
+  flex-shrink: 0;
+  transform-origin: left center; /* grows right from spine */
+  transform: scaleX(0);          /* GSAP expands to scaleX(1) */
+}
+
+/* Hollow ring at end of arm */
+.substop__ring {
+  width: var(--substop-dot-size);
+  height: var(--substop-dot-size);
+  border-radius: 50%;
+  border: 2px solid var(--line-color);
+  background: transparent;
+  flex-shrink: 0;
+  margin-left: -1px; /* butt up against arm end */
+  transition: background 0.15s ease; /* fills when GSAP triggers */
+}
+
+/* Label */
+.substop__label {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.5vw, 20px);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-ink);
+  margin-left: 14px;
+  white-space: nowrap;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .substop {
+    left: 40px; /* mobile spine-x */
+  }
+
+  .substop__label {
+    white-space: normal;
+    max-width: 200px;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+}
