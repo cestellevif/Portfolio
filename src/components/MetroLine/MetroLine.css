@@ -3,16 +3,17 @@
   width: 100%;
 }
 
-/* SVG spine overlay — runs full height of the line */
-.metro-line__svg {
+/* Div spine — positioned via --spine-x, GSAP animates height from 0 downward */
+.metro-line__spine-charcoal {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 200px;
-  height: 100%;
-  pointer-events: none;
+  left: var(--spine-x);
+  width: var(--spine-width);
+  height: 0;
+  background: var(--color-charcoal);
+  transform-origin: top left;
   z-index: 5;
-  overflow: visible;
+  pointer-events: none;
 }
 
 /* Fixed return anchor — visible during route travel */

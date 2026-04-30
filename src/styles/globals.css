@@ -25,9 +25,10 @@
   --font-display: 'Staatliches', sans-serif;
   --font-body: 'DM Mono', monospace;
 
-  /* Spine */
-  --spine-x: 120px;
-  --spine-width: 10px;
+  /* Spine — aligned with left border of the 860px centered frame */
+  --frame-width: 860px;
+  --spine-x: max(0px, calc(50vw - var(--frame-width) / 2));
+  --spine-width: 18px;
 
   /* Dots */
   --station-dot-size: 28px;
@@ -45,7 +46,7 @@
     --arm-length: 140px;
     --station-dot-size: 20px;
     --substop-dot-size: 10px;
-    --spine-width: 7px;
+    --spine-width: 12px;
   }
 }
 

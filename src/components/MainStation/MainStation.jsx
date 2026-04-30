@@ -34,6 +34,9 @@ export default function MainStation({ lines }) {
                 aria-hidden="true"
               />
               <span className="main-station__route-label">{line.label}</span>
+              {selectedId === line.id && (
+                <span className="main-station__route-arm" aria-hidden="true" />
+              )}
             </a>
           ))}
         </nav>

@@ -74,6 +74,7 @@
   cursor: pointer;
   transition: background 0.15s ease;
   background: transparent;
+  position: relative;
 }
 
 .main-station__route:hover {
@@ -91,7 +92,28 @@
 }
 
 .main-station__route-dot--selected {
-  box-shadow: 0 0 0 3px var(--color-ink);  /* black ring */
+  box-shadow: 0 0 0 6px var(--color-ink);  /* black ring */
+}
+
+/* Horizontal arm — draws leftward from the frame's inner edge to its outer border on selection */
+.main-station__route-arm {
+  position: absolute;
+  /* sit at the dot's horizontal position (padding 56px, gap 16px, dot 24px → center at ~68px) */
+  right: calc(100% - 56px);  /* flush with the frame's inner-left padding edge */
+  top: 50%;
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: right center;  /* grows leftward */
+  /* width covers: 56px inner padding + 18px border = 74px; 60px reaches border mid-point */
+  width: 60px;
+  height: 18px;
+  background: var(--color-ink);
+  animation: armDraw 0.4s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes armDraw {
+  from { transform: translateY(-50%) scaleX(0); }
+  to   { transform: translateY(-50%) scaleX(1); }
 }
 
 /* Label */

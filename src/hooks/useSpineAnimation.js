@@ -1,47 +1,47 @@
 // src/hooks/useSpineAnimation.js
-// Animates the charcoal spine drawing downward as the user scrolls into a line section.
-// Uses stroke-dashoffset: as dashoffset goes from full length → 0, the line "draws" itself.
+// Animates the charcoal spine div drawing downward as the user scrolls into a line section.
+// Spine stops when it reaches the first station (above the 140px goal band).
 
 import { useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-export function useSpineAnimation(lineRef, svgRef) {
+// px above the station bottom where the spine stops — matches the goal band height
+const GOAL_BAND_HEIGHT = 140
+
+export function useSpineAnimation(lineRef) {
   useEffect(() => {
-    // Respect reduced motion preference
+    if (!lineRef.current) return
+
+    const spine = lineRef.current.querySelector('.metro-line__spine-charcoal')
+    if (!spine) return
+
+    const firstStation = lineRef.current.querySelector('.station')
+
+    // maxHeight: distance from top of the line to just above the first station's goal band.
+    // If no station found, fall back to the full line height.
+    const maxHeight = firstStation
+      ? firstStation.offsetTop + firstStation.offsetHeight - GOAL_BAND_HEIGHT
+      : lineRef.current.offsetHeight
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const charcoalLine = svgRef.current?.querySelector('.spine-charcoal')
-      if (charcoalLine) {
-        gsap.set(charcoalLine, { strokeDashoffset: 0 })
-      }
+      gsap.set(spine, { height: maxHeight })
       return
     }
 
-    if (!lineRef.current || !svgRef.current) return
-
-    const charcoalLine = svgRef.current.querySelector('.spine-charcoal')
-    if (!charcoalLine) return
-
-    // Use a large dasharray value to cover any line height
-    const DASH_LENGTH = 20000
-
-    gsap.set(charcoalLine, {
-      strokeDasharray: DASH_LENGTH,
-      strokeDashoffset: DASH_LENGTH,
-    })
+    gsap.set(spine, { height: 0 })
 
     const st = ScrollTrigger.create({
       trigger: lineRef.current,
-      start: 'top 85%',       // start drawing when line section is 85% down viewport
-      end: 'bottom bottom',   // finish when bottom of line reaches bottom of viewport
-      scrub: 1.5,             // slight lag — the line races ahead of the user
+      start: 'top 85%',
+      // End when we've scrolled enough for the spine to reach the first station
+      end: () => `+=${maxHeight}`,
+      scrub: 1.5,
       onUpdate: (self) => {
-        // progress 0→1 maps dashoffset DASH_LENGTH→0
-        const offset = DASH_LENGTH * (1 - self.progress)
-        gsap.set(charcoalLine, { strokeDashoffset: offset })
+        gsap.set(spine, { height: maxHeight * self.progress })
       },
     })
 
     return () => st.kill()
-  }, [lineRef, svgRef])
+  }, [lineRef])
 }

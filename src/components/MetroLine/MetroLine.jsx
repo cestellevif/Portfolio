@@ -9,10 +9,9 @@ const SUBSTOP_STEP = 80    // px between each substop arm
 
 export default function MetroLine({ line }) {
   const lineRef = useRef(null)
-  const svgRef = useRef(null)
   const returnRef = useRef(null)
 
-  useSpineAnimation(lineRef, svgRef)
+  useSpineAnimation(lineRef)
 
   // Show return anchor only after MainStation has scrolled off screen
   useEffect(() => {
@@ -56,24 +55,8 @@ export default function MetroLine({ line }) {
         ← Main Station
       </a>
 
-      {/* SVG spine — charcoal path drawn by GSAP, colored overlay filled by GSAP */}
-      <svg
-        ref={svgRef}
-        className="metro-line__svg"
-        aria-hidden="true"
-        preserveAspectRatio="none"
-      >
-        {/* Charcoal spine — stroke-dashoffset animated by GSAP */}
-        <line
-          className="spine-charcoal"
-          x1="120" y1="0"
-          x2="120" y2="10000"
-          stroke="var(--color-charcoal)"
-          strokeWidth="var(--spine-width)"
-          strokeDasharray="20000"
-          strokeDashoffset="20000"
-        />
-      </svg>
+      {/* Charcoal spine — positioned via --spine-x, height animated by GSAP */}
+      <div className="metro-line__spine-charcoal" aria-hidden="true" />
 
       {/* Stations */}
       {line.stations.map((station, stationIndex) => (
