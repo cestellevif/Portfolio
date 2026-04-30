@@ -55,7 +55,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--color-cream);  /* whole site is cream — poster on cream stock */
+  background: #E5DDD0;  /* slightly darker warm cream — poster paper behind the panel */
   color: var(--color-ink);
   overflow-x: hidden;
 }
