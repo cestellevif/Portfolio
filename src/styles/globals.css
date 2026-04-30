@@ -37,6 +37,17 @@
   --arm-width: 4px;
 }
 
+/* Mobile custom property overrides */
+@media (max-width: 768px) {
+  :root {
+    --spine-x: 40px;
+    --arm-length: 140px;
+    --station-dot-size: 20px;
+    --substop-dot-size: 10px;
+    --spine-width: 7px;
+  }
+}
+
 html {
   font-size: 16px;
   scroll-behavior: auto; /* GSAP handles all scroll behavior */

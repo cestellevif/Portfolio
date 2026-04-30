@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react'
 import Station from '../Station/Station.jsx'
 import SubStop from '../SubStop/SubStop.jsx'
 import './MetroLine.css'
+import { useSpineAnimation } from '../../hooks/useSpineAnimation.js'
 
 const SUBSTOP_BASE = 220   // px above bottom of station (above the 140px goal band)
 const SUBSTOP_STEP = 80    // px between each substop arm
@@ -10,6 +11,8 @@ export default function MetroLine({ line }) {
   const lineRef = useRef(null)
   const svgRef = useRef(null)
   const returnRef = useRef(null)
+
+  useSpineAnimation(lineRef, svgRef)
 
   // Show/hide the Return anchor based on whether this line is in view
   useEffect(() => {
