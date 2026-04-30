@@ -6,8 +6,8 @@
 export const LINES = [
   {
     id: 'red',
-    colorHex: '#E3000F',
-    colorVar: 'var(--color-red)',
+    colorHex: '#1B5C38',
+    colorVar: 'var(--color-green)',
     label: 'Community Organizing',
     background: 'var(--color-cream)',
     stations: [

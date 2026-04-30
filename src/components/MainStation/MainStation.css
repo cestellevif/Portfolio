@@ -12,7 +12,7 @@
   width: 100%;
   max-width: 860px;
   background: var(--color-hub);        /* burnt sienna — orange interior */
-  border: 6px solid var(--color-ink);  /* thick black border */
+  border: 18px solid var(--color-ink); /* thick black border */
   padding: 52px 56px 0 56px;           /* no bottom padding — route selectors flush to bottom */
   position: relative;
 }

@@ -14,19 +14,23 @@ export default function MetroLine({ line }) {
 
   useSpineAnimation(lineRef, svgRef)
 
-  // Show/hide the Return anchor based on whether this line is in view
+  // Show return anchor only after MainStation has scrolled off screen
   useEffect(() => {
-    const el = lineRef.current
     const returnEl = returnRef.current
-    if (!el || !returnEl) return
+    if (!returnEl) return
+
+    // Watch the main station wrapper (first section on the page)
+    const mainStation = document.getElementById('top')
+    if (!mainStation) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        returnEl.classList.toggle('metro-line__return--visible', entry.isIntersecting)
+        // Show return button when main station is NOT visible
+        returnEl.classList.toggle('metro-line__return--visible', !entry.isIntersecting)
       },
-      { threshold: 0.05 }
+      { threshold: 0 }
     )
-    observer.observe(el)
+    observer.observe(mainStation)
     return () => observer.disconnect()
   }, [])
 
