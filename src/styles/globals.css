@@ -9,11 +9,12 @@
 :root {
   /* Line colors */
   --color-red: #E3000F;
-  --color-blue: #003DA5;
-  --color-yellow: #FFD700;
+  --color-blue: #1D4F91;    /* slate navy — less cobalt, more poster */
+  --color-yellow: #BF8C00;  /* dark goldenrod / mustard — mid-century warm */
   --color-green: #1B5C38;
 
   /* Surface colors */
+  --color-bg: #E5DDD0;          /* poster paper background */
   --color-charcoal: #2D2D2D;
   --color-hub: #B5451B;
   --color-cream: #FAF7F0;
@@ -22,7 +23,7 @@
   --color-ink: #1A1A1A;
 
   /* Typography */
-  --font-display: 'Staatliches', sans-serif;
+  --font-display: 'Public Sans', sans-serif;
   --font-body: 'DM Mono', monospace;
 
   /* Spine — aligned with left border of the 860px centered frame */
@@ -50,9 +51,28 @@
   }
 }
 
+/* Skip link — visually hidden until focused by keyboard */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--color-ink);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 html {
   font-size: 16px;
   scroll-behavior: auto; /* GSAP handles all scroll behavior */
+  scrollbar-gutter: stable; /* reserves scrollbar space always — prevents layout shift on line select */
 }
 
 body {

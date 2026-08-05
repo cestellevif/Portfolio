@@ -1,0 +1,22 @@
+/* ═══════════════════════════════════════════════
+   DEV ONLY — component boundary lines
+   Remove this import from main.jsx before deploy
+   ═══════════════════════════════════════════════ */
+
+/* MainStation — red */
+.main-station-wrapper {
+  border-top: 2px solid rgba(255, 60, 60, 0.85);
+  border-bottom: 2px solid rgba(255, 60, 60, 0.85);
+}
+
+/* MetroLine wrapper — blue */
+.metro-line {
+  border-top: 2px solid rgba(50, 120, 255, 0.85);
+  border-bottom: 2px solid rgba(50, 120, 255, 0.85);
+}
+
+/* Each Station — green */
+.station {
+  border-top: 2px solid rgba(40, 200, 80, 0.85);
+  border-bottom: 2px solid rgba(40, 200, 80, 0.85);
+}

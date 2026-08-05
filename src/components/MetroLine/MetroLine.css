@@ -1,9 +1,11 @@
 .metro-line {
   position: relative;
   width: 100%;
+  margin-top: -18px;  /* tuck spine under MainStation's bottom border — hidden until scroll */
 }
 
 /* Div spine — positioned via --spine-x, GSAP animates height from 0 downward */
+/* No explicit z-index — .station (z-index: 1) sits above the spine via stacking context */
 .metro-line__spine-charcoal {
   position: absolute;
   top: 0;
@@ -11,8 +13,8 @@
   width: var(--spine-width);
   height: 0;
   background: var(--color-charcoal);
+  border-radius: 0 0 9px 9px;  /* rounded tip — semicircle on an 18px-wide line */
   transform-origin: top left;
-  z-index: 5;
   pointer-events: none;
 }
 
@@ -35,4 +37,15 @@
 .metro-line__return--visible {
   opacity: 1;
   pointer-events: auto;
+}
+
+.metro-line__return:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Breathing room after the last station — spine races through here before the
+   loop anchor (duplicate header) arrives at the top of the viewport. */
+.metro-line__buffer {
+  height: 70vh;
 }

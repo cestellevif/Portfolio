@@ -1,14 +1,17 @@
-import { LINES } from './data/projects.js'
-import MainStation from './components/MainStation/MainStation.jsx'
-import MetroLine from './components/MetroLine/MetroLine.jsx'
+// App — root component for the portfolio.
+// Page flow: SiteHeader → PosterGrid.
+// DepartureBoard + MetroLine are built but removed from the page for now —
+// they'll be wired back in once the poster layout and horizontal transition are ready.
+
+import SiteHeader from './components/SiteHeader/SiteHeader.jsx'
+import PosterGrid from './components/PosterGrid/PosterGrid.jsx'
 
 export default function App() {
   return (
     <div className="app" id="top">
-      <MainStation lines={LINES} />
-      {LINES.map((line) => (
-        <MetroLine key={line.id} line={line} />
-      ))}
+      <a href="#main-content" className="skip-link">Skip to main content</a>
+      <SiteHeader />
+      <PosterGrid />
     </div>
   )
 }

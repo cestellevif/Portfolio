@@ -1,0 +1,136 @@
+/* DepartureBoard — dark terminal route selector section.
+   Full-width near-black panel, content constrained to 1200px.
+   Inspired by dope.security's stamped boarding-pass aesthetic.
+   Rows are flat, borderless, separated by hairline dividers. */
+
+/* ── Component-scoped design tokens ── */
+:root {
+  --db-bg: #090909;
+  --db-text: #f7f9fa;
+  --db-divider: rgba(247, 249, 250, 0.1);
+}
+
+/* ── Section shell — full viewport width, dark background ── */
+.departure-board {
+  width: 100%;
+  background: var(--db-bg);
+  /* Generous vertical breathing room — this section is a destination, not a nav bar */
+  padding: 96px 40px;
+}
+
+/* ── Inner content — centered, max-width constrained ── */
+.departure-board__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  /* Top hairline divider before the first row */
+  border-top: 1px solid var(--db-divider);
+}
+
+/* ── Row — one metro line per row ── */
+.departure-board__row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 0;
+  /* Let FlipLabel shrink to fit within the row */
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--db-text);
+  font-family: var(--font-body);
+  /* Hairline bottom divider between rows */
+  border-bottom: 1px solid var(--db-divider);
+  /* Left border: transparent at rest, route color when active.
+     No border-radius — flat terminal aesthetic. */
+  border-left: 3px solid transparent;
+  padding-left: 20px;
+  /* Smooth state transitions — hover bg and active left border */
+  transition:
+    background 0.15s ease,
+    border-left-color 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Subtle background lift on hover — just enough to confirm interaction */
+.departure-board__row:hover {
+  background: rgba(247, 249, 250, 0.04);
+}
+
+/* Active row — colored left notch confirms selection, matches line brand */
+.departure-board__row--active {
+  border-left-color: var(--route-color);
+}
+
+/* Focus-visible: outline uses the line's route color for visual clarity.
+   Inset offset keeps it inside the row boundary. */
+.departure-board__row:focus-visible {
+  outline: 2px solid var(--route-color);
+  outline-offset: -4px;
+}
+
+/* ── Dot — colored circle, black ring when selected ── */
+.departure-board__dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: box-shadow 0.15s ease;
+}
+
+/* Black ring on selection — 6px matches MainStation's dot ring weight */
+.departure-board__dot--active {
+  box-shadow: 0 0 0 6px var(--db-text);
+}
+
+/* ── Arrow — pushed to the far right via margin-left: auto ── */
+.departure-board__arrow {
+  margin-left: auto;
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--db-text);
+  /* Slight rightward nudge on hover — signals the row is actionable */
+  transition: transform 0.2s ease;
+  /* Prevent flex shrink from collapsing the arrow */
+  flex-shrink: 0;
+}
+
+/* Nudge arrow right when the row is hovered or active */
+.departure-board__row:hover .departure-board__arrow,
+.departure-board__row--active .departure-board__arrow {
+  transform: translateX(4px);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .departure-board {
+    /* Reduce vertical padding on small screens */
+    padding: 56px 20px;
+  }
+
+  .departure-board__row {
+    /* Tighter vertical rhythm on mobile */
+    padding: 18px 0 18px 16px;
+    gap: 14px;
+  }
+
+  .departure-board__dot {
+    width: 16px;
+    height: 16px;
+  }
+
+  .departure-board__arrow {
+    /* Slightly smaller arrow on mobile */
+    font-size: 16px;
+  }
+}
+
+/* ── Reduced motion — suppress arrow nudge for users who prefer it ── */
+@media (prefers-reduced-motion: reduce) {
+  .departure-board__arrow {
+    transition: none;
+  }
+
+  .departure-board__row:hover .departure-board__arrow,
+  .departure-board__row--active .departure-board__arrow {
+    transform: none;
+  }
+}

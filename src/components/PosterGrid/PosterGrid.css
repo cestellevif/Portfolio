@@ -1,0 +1,130 @@
+/* PosterGrid — horizontal scrolling poster strip in a connected black frame.
+   Offset to the right with space on the left, like subway station art posters
+   mounted in a continuous black strip on tile walls.
+   Horizontal scroll with arrow navigation reveals more posters. */
+
+/* ── Section wrapper — relative for arrow positioning ── */
+.poster-grid {
+  width: 100%;
+  padding: 48px 0 64px;
+  position: relative;
+}
+
+/* ── Scroll track — horizontal overflow, offset right ── */
+.poster-grid__track {
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Offset: space on the left, posters bleed off right edge */
+  padding-left: clamp(40px, 8vw, 120px);
+  padding-right: 0;
+  /* Hide scrollbar — arrow nav is the primary control */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+
+.poster-grid__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Black frame — continuous border, sized to content ── */
+.poster-grid__container {
+  display: flex;
+  background: var(--color-ink, #1a1a1a);
+  /* Heavy frame — thick relative to poster size, like the subway inspo */
+  padding: 32px;
+  /* Don't shrink — let it overflow for scrolling */
+  width: max-content;
+}
+
+/* ── Card — wide landscape poster window ── */
+.poster-grid__card {
+  /* Large fixed width so posters bleed off viewport — enables scroll */
+  width: clamp(340px, 38vw, 540px);
+  aspect-ratio: 3 / 2;
+  background: #ddd;
+  flex-shrink: 0;
+  /* Gap between posters — thick black frame shows through */
+  margin: 0 10px;
+}
+
+.poster-grid__card:first-child {
+  margin-left: 0;
+}
+
+.poster-grid__card:last-child {
+  margin-right: 0;
+}
+
+/* ── Arrow button — scroll control ── */
+.poster-grid__arrow {
+  position: absolute;
+  /* Vertically centered on the poster strip */
+  top: 50%;
+  transform: translateY(-50%);
+  right: clamp(12px, 2vw, 32px);
+  z-index: 2;
+
+  /* Appearance */
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-ink, #1a1a1a);
+  color: #f7f9fa;
+  border: 2px solid rgba(247, 249, 250, 0.3);
+  cursor: pointer;
+
+  /* Center the arrow glyph */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-family: var(--font-body);
+
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.poster-grid__arrow:hover {
+  background: #2a2a2a;
+  border-color: rgba(247, 249, 250, 0.6);
+}
+
+/* Hide arrow when scrolled to the end */
+.poster-grid__arrow--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .poster-grid {
+    padding: 32px 0 48px;
+  }
+
+  .poster-grid__track {
+    padding-left: 20px;
+  }
+
+  .poster-grid__container {
+    padding: 14px;
+  }
+
+  .poster-grid__card {
+    width: 220px;
+    margin: 0 6px;
+  }
+
+  .poster-grid__arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    right: 8px;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .poster-grid__track {
+    scroll-behavior: auto;
+  }
+}

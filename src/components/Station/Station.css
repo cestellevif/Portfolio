@@ -2,20 +2,32 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
-  /* background set by parent MetroLine via inline style */
+  z-index: 1;  /* creates stacking context above the charcoal spine (no z-index) */
 }
 
 /* ── Station dot on spine ── */
 .station__dot {
   position: absolute;
-  left: calc(var(--spine-x) - var(--station-dot-size) / 2);
-  /* Aligned with top of goal band */
+  /* Centered on spine: spine left + half-spine-width - half-dot-width */
+  left: calc(var(--spine-x) + var(--spine-width) / 2 - var(--station-dot-size) / 2);
   bottom: 140px;
   width: var(--station-dot-size);
   height: var(--station-dot-size);
   border-radius: 50%;
-  background: var(--line-color);
+  background: transparent;
+  box-shadow: 0 0 0 10px var(--color-ink);  /* thick black ring — 2× previous */
+  overflow: hidden;   /* clips the fill animation to circular shape */
   z-index: 10;
+}
+
+/* Fill div — animates scaleY 0→1 (top to bottom) when spine arrives */
+.station__dot-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--line-color);
+  transform: scaleY(0);
+  transform-origin: top center;
 }
 
 /* ── Sub-stops container ── */
@@ -36,7 +48,7 @@
   height: 140px;
   display: flex;
   align-items: center;
-  padding: 0 60px 0 160px; /* left padding clears the spine */
+  padding: 0 60px 0 calc(var(--spine-x) + var(--spine-width) + 32px); /* left edge aligns with spine right + gap */
   z-index: 5;
 }
 
@@ -51,13 +63,34 @@
   border-left: 8px solid var(--color-yellow);
 }
 
+/* Track — clips both goal and achievement, they slide through this window */
+.station__goal-track {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .station__goal-text {
   font-family: var(--font-display);
   font-size: clamp(20px, 2.8vw, 44px);
   text-transform: uppercase;
   line-height: 1.15;
   letter-spacing: 0.02em;
-  max-width: 1100px;
+  width: 100%;
+  white-space: pre-line;
+  will-change: transform;
+}
+
+/* Achievement — absolutely fills the track, GSAP owns the transform */
+.station__goal-text--achievement {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .station__goal--colored .station__goal-text {
@@ -68,41 +101,41 @@
   color: var(--color-ink);
 }
 
-/* ── Terminus — double bar below station dot ── */
-.station__terminus {
-  position: absolute;
-  left: calc(var(--spine-x) - 24px);
-  bottom: 126px;
-  width: 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 11;
-}
 
-.station__terminus-bar {
-  height: 4px;
-  background: var(--line-color);
-}
 
-/* ── Spine color overlay — animated by GSAP ── */
-.station__spine-color {
+/* ── Per-station charcoal spine — starts hidden, revealed when MetroLine spine arrives ── */
+.station__spine-charcoal {
   position: absolute;
-  left: calc(var(--spine-x) - var(--spine-width) / 2);
+  left: var(--spine-x);
   top: 0;
   width: var(--spine-width);
-  height: 100%;
+  height: 0;          /* hidden until spine animation hands off */
+  background: var(--color-charcoal);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Spine color overlay — left half of charcoal spine, fills top-down while pinned ── */
+.station__spine-color {
+  position: absolute;
+  left: var(--spine-x);
+  top: 0;
+  width: calc(var(--spine-width) / 2);  /* left half only — charcoal still visible on right */
+  /* Stop just above the dot: full height minus goal band minus dot size */
+  height: calc(100% - 140px - var(--station-dot-size));
   background: var(--line-color);
+  /* Rounded tip — semicircle on the 9px-wide color strip */
+  border-radius: 0 0 calc(var(--spine-width) / 4) calc(var(--spine-width) / 4);
   transform: scaleY(0);
   transform-origin: top center;
-  z-index: 6;
+  z-index: 7;
   pointer-events: none;
 }
 
 /* Mobile */
 @media (max-width: 768px) {
   .station__goal {
-    padding: 0 24px 0 70px;
+    padding: 0 24px 0 calc(var(--spine-x) + var(--spine-width) + 20px);
     height: 120px;
   }
 
@@ -112,15 +145,11 @@
 
   .station__dot {
     bottom: 120px;
-    left: calc(40px - var(--station-dot-size) / 2);
-  }
-
-  .station__spine-color {
-    left: calc(40px - var(--spine-width) / 2);
+    /* left and centering use CSS vars — no override needed */
   }
 
   .station__terminus {
-    left: calc(40px - 24px);
     bottom: 106px;
+    /* left centering uses CSS vars — no override needed */
   }
 }

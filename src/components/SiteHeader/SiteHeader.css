@@ -1,0 +1,102 @@
+/* SiteHeader — left-aligned masthead, Baptiste Glaymann style.
+   Name + role on one line, left-aligned. White nav bar with black cell borders. */
+
+.site-header {
+  width: 100%;
+  padding: 0;
+}
+
+/* ── Title line — left-aligned, uppercase ── */
+.site-header__title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0;
+  padding: 8px 16px 0;
+}
+
+.site-header__title strong {
+  font-weight: 800;
+}
+
+.site-header__sep {
+  font-weight: 400;
+  margin: 0 0.15em;
+}
+
+/* ── Nav bar — white bg, black stroke borders between cells ── */
+.site-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: 8px;
+  border-top: 1px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.site-header__nav-left,
+.site-header__nav-right {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each nav item is a bordered cell */
+.site-header__nav-left li,
+.site-header__nav-right li {
+  border-right: 1px solid var(--color-ink);
+}
+
+.site-header__nav-right li {
+  border-right: none;
+  border-left: 1px solid var(--color-ink);
+}
+
+.site-header__nav-link {
+  display: block;
+  padding: 6px 14px;
+  color: var(--color-ink);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.site-header__nav-link:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* Active page — dark fill with light text */
+.site-header__nav-link--active {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+.site-header__nav-link--active:hover {
+  background: var(--color-ink);
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .site-header__title {
+    font-size: 18px;
+    padding: 8px 12px 0;
+  }
+
+  .site-header__nav {
+    font-size: 12px;
+    flex-wrap: wrap;
+  }
+
+  .site-header__nav-link {
+    padding: 6px 10px;
+  }
+}

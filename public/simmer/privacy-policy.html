@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simmer — Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Staatliches&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: #E5DDD0;
+      color: #1A1A1A;
+      line-height: 1.6;
+      padding: 48px 24px 96px;
+    }
+
+    .privacy-policy {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .privacy-policy__back {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: #1A1A1A;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      margin-bottom: 32px;
+      opacity: 0.6;
+      transition: opacity 0.15s ease;
+    }
+
+    .privacy-policy__back:hover { opacity: 1; }
+
+    h1 {
+      font-family: 'Staatliches', sans-serif;
+      font-size: clamp(32px, 6vw, 56px);
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .privacy-policy__updated {
+      font-size: 14px;
+      opacity: 0.5;
+      margin-bottom: 32px;
+    }
+
+    .privacy-policy__intro {
+      font-size: 15px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.15);
+      margin: 40px 0;
+    }
+
+    h2 {
+      font-family: 'Staatliches', sans-serif;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      margin-top: 24px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 16px;
+    }
+
+    li {
+      font-size: 14px;
+      line-height: 1.7;
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+
+    li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: rgba(0, 0, 0, 0.35);
+    }
+
+    strong { font-weight: 500; }
+  </style>
+</head>
+<body>
+  <article class="privacy-policy">
+    <a href="/" class="privacy-policy__back">&larr; Back to portfolio</a>
+
+    <h1>Simmer Privacy Policy</h1>
+    <p class="privacy-policy__updated">Last updated: July 20, 2026</p>
+    <p class="privacy-policy__intro">Simmer is a Chrome extension that helps you cook through recipes step by step. This policy explains what data the extension accesses, what it does with that data, and what it does not do.</p>
+
+    <hr />
+
+    <h2>What Simmer accesses</h2>
+
+    <h3>Page content (recipe detection)</h3>
+    <p>When you click the Simmer toolbar button, or when you navigate to a new page while the Simmer panel is open, the extension reads the structured recipe data on that page. It looks specifically for recipe information embedded in the page's HTML (schema.org JSON-LD markup), which is the standard format recipe websites use to share structured data with search engines and other tools.</p>
+    <p>Simmer does not read your browsing history, form inputs, passwords, or any content outside of this structured recipe markup.</p>
+
+    <h3>Permissions</h3>
+    <ul>
+      <li><strong>sidePanel</strong> — displays the Simmer panel alongside the page you are viewing</li>
+      <li><strong>activeTab</strong> — reads the content of the tab you are currently on, when the panel is open</li>
+      <li><strong>host_permissions (*://*/*)</strong> — allows the extension to read page content when you navigate to a new URL while the panel is already open. Does not grant access to your browsing history, other devices, or any data beyond the current page's content.</li>
+      <li><strong>storage</strong> — saves your preferences (serving size unit preference, onboarding completion) locally on your device</li>
+      <li><strong>scripting</strong> — runs the recipe-detection script inside the current tab</li>
+      <li><strong>notifications</strong> — reserved for future use (timer completion alerts); not currently active</li>
+    </ul>
+
+    <hr />
+
+    <h2>What Simmer does with your data</h2>
+    <ul>
+      <li>Recipe data is held temporarily in Chrome's session storage (cleared when you close the browser) and used only to display the recipe in the Simmer panel.</li>
+      <li>Your unit preference (Imperial or Metric) is saved locally on your device using Chrome's local storage. It is never transmitted anywhere.</li>
+      <li>No data is sent to any server. Simmer has no backend, no analytics, and no network requests of its own.</li>
+    </ul>
+
+    <hr />
+
+    <h2>What Simmer does not do</h2>
+    <ul>
+      <li>Does not collect, store, or transmit your browsing history</li>
+      <li>Does not track which websites you visit</li>
+      <li>Does not share any data with third parties</li>
+      <li>Does not use cookies</li>
+      <li>Does not require an account</li>
+      <li>Does not connect to the internet</li>
+    </ul>
+
+    <hr />
+
+    <h2>Changes to this policy</h2>
+    <p>If this policy changes in a future version of the extension, the updated date at the top of this document will reflect that. Significant changes will also be noted in the extension's release notes.</p>
+
+    <hr />
+
+    <h2>Contact</h2>
+    <p>Questions about this policy can be directed to the Simmer project repository.</p>
+  </article>
+</body>
+</html>
