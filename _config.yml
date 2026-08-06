@@ -1,0 +1,8 @@
+exclude:
+  - docs/
+  - node_modules/
+  - src/
+  - "*.config.js"
+  - "*.config.ts"
+  - package.json
+  - package-lock.json
