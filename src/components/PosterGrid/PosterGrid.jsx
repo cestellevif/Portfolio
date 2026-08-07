@@ -54,9 +54,6 @@ export default function PosterGrid() {
       cards.forEach(card => {
         const scale = card.offsetWidth / 1280
         card.style.setProperty('--iframe-scale', scale)
-        // Crop 80px of site content from the top (in iframe coordinates) to skip
-        // past typical site nav bars. In screen px: 80 * scale.
-        card.style.setProperty('--iframe-top', `${-80 * scale}px`)
       })
     }
 

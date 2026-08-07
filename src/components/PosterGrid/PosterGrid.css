@@ -59,7 +59,7 @@
    Centered horizontally via left:50% + translateX(-50%). */
 .poster-grid__iframe {
   position: absolute;
-  top: var(--iframe-top, 0px);
+  top: 0;
   left: 50%;
   width: 1280px;
   height: 960px; /* taller than 3:2 so cropping top still fills the card */
