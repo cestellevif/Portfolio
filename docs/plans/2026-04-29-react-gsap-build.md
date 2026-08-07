@@ -1,6 +1,6 @@
 ---
-render_with_liquid: false
 ---
+{% raw %}
 # Metro Map Portfolio — React + GSAP Implementation Plan
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
@@ -1403,3 +1403,5 @@ Before marking complete, verify all items from the design doc:
 - [ ] Three route selectors on hero hub
 - [ ] Mobile: spine repositions, arms shorten, text wraps
 - [ ] Reduced motion: all content visible without animation
+
+{% endraw %}
