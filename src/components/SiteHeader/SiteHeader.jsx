@@ -21,7 +21,7 @@ export default function SiteHeader() {
       <nav className="site-header__nav" aria-label="Primary navigation">
         <ul className="site-header__nav-left">
           <li><a href="#top" className="site-header__nav-link site-header__nav-link--active">Home</a></li>
-          <li><a href="/simmer/privacy-policy.html" className="site-header__nav-link">Simmer Privacy Policy</a></li>
+          <li><a href={`${import.meta.env.BASE_URL}simmer/privacy-policy.html`} className="site-header__nav-link">Simmer Privacy Policy</a></li>
         </ul>
         <ul className="site-header__nav-right">
           <li><a href="#contact" onClick={handleContact} className="site-header__nav-link">Contact</a></li>
