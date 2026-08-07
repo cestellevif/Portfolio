@@ -12,7 +12,7 @@ const POSTERS = [
   {
     id: 'felt-well-met',
     title: 'Be Well Met',
-    tagline: 'Robert's Rules Made Easy',
+    tagline: "Robert's Rules Made Easy",
     url: 'https://www.bewellmet.com',
     video: null,
     image: null,
