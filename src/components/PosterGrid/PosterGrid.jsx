@@ -9,30 +9,9 @@ import './PosterGrid.css'
 // Rendering priority per card: video → image → iframe (url) → placeholder
 // Set video/image to a public/ path when ready; url opens on click.
 const POSTERS = [
-  {
-    id: 'felt-well-met',
-    title: 'Be Well Met',
-    tagline: "Robert's Rules Made Easy",
-    url: 'https://www.bewellmet.com',
-    video: null,
-    image: null,
-  },
-  {
-    id: 'simmer',
-    title: 'Simmer',
-    tagline: 'Chrome Extension — Coming Soon',
-    url: null,
-    video: null,              // swap in 'images/simmer-demo.mp4' when ready
-    image: 'images/Simmer.png',
-  },
-  {
-    id: 'abq',
-    title: 'ABQ',
-    tagline: 'Three Questions to Media Literacy',
-    url: 'https://www.askbetterquestions.org',
-    video: null,
-    image: null,
-  },
+  { id: 'felt-well-met', title: 'Be Well Met', url: 'https://www.bewellmet.com', video: null, image: null },
+  { id: 'simmer',        title: 'Simmer',       url: null, video: null, image: 'images/Simmer.png' },
+  { id: 'abq',           title: 'ABQ',          url: 'https://www.askbetterquestions.org', video: null, image: null },
 ]
 
 export default function PosterGrid() {
@@ -137,23 +116,15 @@ export default function PosterGrid() {
                 </div>
               )}
 
-              {/* ── Tagline banner — always visible at the bottom ── */}
-              <div className="poster-grid__banner" aria-hidden="true">
-                {poster.tagline}
-              </div>
-
               {/* ── Click overlay — opens site in new tab (when URL exists) ── */}
-              {poster.url ? (
+              {poster.url && (
                 <a
                   href={poster.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="poster-grid__overlay"
-                  aria-label={`${poster.title} — ${poster.tagline}. Opens in new tab.`}
+                  aria-label={`Visit ${poster.title} — opens in new tab`}
                 />
-              ) : (
-                // No link yet — non-interactive overlay keeps card consistent
-                <div className="poster-grid__overlay poster-grid__overlay--inert" aria-hidden="true" />
               )}
 
             </div>

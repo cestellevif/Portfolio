@@ -106,36 +106,13 @@
   letter-spacing: 0.06em;
 }
 
-/* ── Tagline banner — always-visible strip at the card bottom ── */
-.poster-grid__banner {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--color-ink, #1a1a1a);
-  color: #fff;
-  font-family: var(--font-display);
-  font-size: clamp(11px, 1.2vw, 15px);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 8px 14px;
-  line-height: 1.2;
-  /* Sits above the overlay so it's always readable */
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* ── Overlay — transparent click target, sits above iframe/video/image ── */
+/* ── Overlay — transparent click target on top of content ── */
 .poster-grid__overlay {
   position: absolute;
   inset: 0;
-  /* Leave room at bottom so banner stays visible and readable */
-  bottom: 36px;
   text-decoration: none;
   background: transparent;
   transition: background 0.2s ease;
-  z-index: 2;
 }
 
 .poster-grid__overlay:hover {
@@ -146,11 +123,6 @@
 .poster-grid__overlay:focus-visible {
   outline: 3px solid #fff;
   outline-offset: -3px;
-}
-
-/* Inert overlay for cards with no URL */
-.poster-grid__overlay--inert {
-  pointer-events: none;
 }
 
 /* ── Arrow button — scroll control ── */
