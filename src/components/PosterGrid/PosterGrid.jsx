@@ -110,15 +110,15 @@ export default function PosterGrid() {
             colors={["#ffffff", "#aaaaaa", "#555555"]}
             rotation={50}
             speed={0.04}
-            scale={0.4}
+            scale={0.6}
             frequency={1.5}
-            warpStrength={0.4}
+            warpStrength={0.6}
             mouseInfluence={0.2}
-            noise={0.04}
+            noise={0.06}
             parallax={0.1}
             iterations={1}
-            intensity={0.5}
-            bandWidth={1}
+            intensity={1.4}
+            bandWidth={3}
             transparent
             style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}
           />
