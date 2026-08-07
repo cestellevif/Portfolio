@@ -46,18 +46,8 @@
 /* ── Black frame — continuous border, sized to content ── */
 .poster-grid__container {
   display: flex;
-  /* Animated diagonal shimmer simulates light catching the frame surface */
-  background: linear-gradient(
-    105deg,
-    #0a0a0a 0%,
-    #1a1a1a 25%,
-    #3a3633 48%,
-    #3a3633 52%,
-    #1a1a1a 75%,
-    #0a0a0a 100%
-  );
-  background-size: 300% 300%;
-  animation: frame-shimmer 10s ease-in-out infinite;
+  /* Matte black — deep, flat, no shimmer */
+  background: #0f0f0f;
   /* Heavy frame — thick relative to poster size, like the subway inspo */
   padding: 32px;
   /* Don't shrink — let it overflow for scrolling */
@@ -66,14 +56,8 @@
   overflow: hidden;
   /* Thin inner bevel + faint outer edge — reads as a physical picture frame */
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
-    0 0 0 1px rgba(255, 255, 255, 0.18);
-}
-
-@keyframes frame-shimmer {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 /* Cards must sit above the Beams canvas layer */
