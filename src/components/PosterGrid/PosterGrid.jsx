@@ -1,21 +1,23 @@
 // PosterGrid — horizontal scrolling poster strip in a connected black frame.
-// Offset to the right with space on the left, like subway station art posters.
+// Each card shows a live iframe preview of the project site; clicking opens
+// the site in a new tab. Cards without a URL show a coming-soon placeholder.
 // Arrow button only appears when content overflows the viewport.
 
 import { useRef, useState, useCallback, useEffect } from 'react'
 import './PosterGrid.css'
 
+// url: null = placeholder (not yet linked). Add URL when the project is ready.
 const POSTERS = [
-  { id: 'felt-well-met' },
-  { id: 'simmer' },
-  { id: 'ask-better-questions' },
+  { id: 'felt-well-met', title: 'Be Well Met', url: 'https://www.bewellmet.com' },
+  { id: 'simmer',        title: 'Simmer',       url: null },
+  { id: 'abq',           title: 'ABQ',          url: null },
 ]
 
 export default function PosterGrid() {
   const trackRef = useRef(null)
   const [canScroll, setCanScroll] = useState(false)
 
-  // Check if the track content overflows — show arrow only when it does
+  // Show arrow only when the track overflows
   const checkOverflow = useCallback(() => {
     const track = trackRef.current
     if (!track) return
@@ -28,16 +30,14 @@ export default function PosterGrid() {
     return () => window.removeEventListener('resize', checkOverflow)
   }, [checkOverflow])
 
-  // Also hide arrow once user has scrolled to the end
+  // Hide arrow once user scrolls to the end
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
-
     const onScroll = () => {
       const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1
       setCanScroll(!atEnd)
     }
-
     track.addEventListener('scroll', onScroll, { passive: true })
     return () => track.removeEventListener('scroll', onScroll)
   }, [])
@@ -54,7 +54,39 @@ export default function PosterGrid() {
       <div ref={trackRef} className="poster-grid__track">
         <div className="poster-grid__container">
           {POSTERS.map(poster => (
-            <div key={poster.id} className="poster-grid__card" aria-hidden="true" />
+            <div key={poster.id} className="poster-grid__card">
+              {poster.url ? (
+                <>
+                  {/* iframe is visual only — pointer-events disabled so it doesn't
+                      swallow scroll. The overlay <a> handles all interaction. */}
+                  <iframe
+                    src={poster.url}
+                    title={poster.title}
+                    className="poster-grid__iframe"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  />
+                  {/* Overlay captures clicks and opens the site in a new tab */}
+                  <a
+                    href={poster.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="poster-grid__overlay"
+                    aria-label={`Visit ${poster.title} — opens in new tab`}
+                  >
+                    <span className="poster-grid__visit-label">
+                      {poster.title} ↗
+                    </span>
+                  </a>
+                </>
+              ) : (
+                // Placeholder for cards not yet linked
+                <div className="poster-grid__placeholder" aria-label={`${poster.title} — coming soon`}>
+                  <span className="poster-grid__placeholder-title">{poster.title}</span>
+                  <span className="poster-grid__placeholder-sub">Coming soon</span>
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </div>
