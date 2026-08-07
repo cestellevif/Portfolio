@@ -5,6 +5,7 @@
 
 import { useRef, useState, useCallback, useEffect } from 'react'
 import CursorGrid from '../CursorGrid/CursorGrid'
+import MetallicPaint from '../MetallicPaint/MetallicPaint'
 import './PosterGrid.css'
 
 // Rendering priority per card: video → image → iframe (url) → placeholder
@@ -104,6 +105,16 @@ export default function PosterGrid() {
       />
       <div ref={trackRef} className="poster-grid__track">
         <div className="poster-grid__container">
+          {/* Iridescent metallic shimmer — light reflecting off the frame surface */}
+          <MetallicPaint
+            lightColor="#c8c8c8"
+            darkColor="#050505"
+            tintColor="#ffffff"
+            speed={0.15}
+            scale={4}
+            chromaticSpread={2.5}
+            noiseScale={0.18}
+          />
 {POSTERS.map(poster => (
             <div key={poster.id} className="poster-grid__card">
 

@@ -1,0 +1,20 @@
+/* MetallicPaint — positions the WebGL canvas as an absolute fill inside its parent.
+   The parent (.poster-grid__container) must have position: relative and overflow: hidden. */
+
+.paint-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.paint-container canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
