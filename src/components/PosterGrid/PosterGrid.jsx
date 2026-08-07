@@ -5,7 +5,7 @@
 
 import { useRef, useState, useCallback, useEffect } from 'react'
 import CursorGrid from '../CursorGrid/CursorGrid'
-import Beams from '../Beams/Beams'
+import ColorBends from '../ColorBends/ColorBends'
 import './PosterGrid.css'
 
 // Rendering priority per card: video → image → iframe (url) → placeholder
@@ -105,16 +105,22 @@ export default function PosterGrid() {
       />
       <div ref={trackRef} className="poster-grid__track">
         <div className="poster-grid__container">
-          {/* Animated light beams in the black frame padding around the cards */}
-          <Beams
-            beamWidth={1.4}
-            beamHeight={15}
-            beamNumber={36}
-            lightColor="#bababa"
-            speed={1.3}
-            noiseIntensity={0.4}
-            scale={0.2}
-            rotation={109}
+          {/* Animated color bends fill the black frame padding around the cards */}
+          <ColorBends
+            colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
+            rotation={50}
+            speed={0.2}
+            scale={1}
+            frequency={1}
+            warpStrength={1}
+            mouseInfluence={1}
+            noise={0.15}
+            parallax={0.5}
+            iterations={1}
+            intensity={1.5}
+            bandWidth={6}
+            transparent
+            style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}
           />
           {POSTERS.map(poster => (
             <div key={poster.id} className="poster-grid__card">
