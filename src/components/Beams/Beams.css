@@ -1,0 +1,15 @@
+/* Beams — fills its container; the parent must be position: relative */
+.beams {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Prevent the canvas from intercepting pointer events — parent handles them */
+  pointer-events: none;
+}
+
+/* R3F Canvas div: fill the wrapper */
+.beams > div {
+  width: 100% !important;
+  height: 100% !important;
+}

@@ -51,6 +51,14 @@
   padding: 32px;
   /* Don't shrink — let it overflow for scrolling */
   width: max-content;
+  /* Needed so the absolutely-positioned Beams canvas is clipped to the frame */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cards must sit above the Beams canvas layer */
+.poster-grid__card {
+  z-index: 1;
 }
 
 /* ── Card — wide landscape poster window ── */
