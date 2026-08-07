@@ -8,10 +8,23 @@ import './PosterGrid.css'
 
 // Rendering priority per card: video → image → iframe (url) → placeholder
 // Set video/image to a public/ path when ready; url opens on click.
+// sign.color: orange #f5a623 or peach #ffe9c4 per Figma DecisionGate design.
 const POSTERS = [
-  { id: 'felt-well-met', title: 'Be Well Met', url: 'https://www.bewellmet.com', video: null, image: null },
-  { id: 'simmer',        title: 'Simmer',       url: null, video: null, image: 'images/Simmer.png' },
-  { id: 'abq',           title: 'ABQ',          url: 'https://www.askbetterquestions.org', video: null, image: null },
+  {
+    id: 'felt-well-met', title: 'Be Well Met',
+    url: 'https://www.bewellmet.com', video: null, image: null,
+    sign: { text: "Robert's Rules Made Simple", color: '#f5a623' },
+  },
+  {
+    id: 'simmer', title: 'Simmer',
+    url: null, video: null, image: 'images/Simmer.png',
+    sign: { text: 'Any Recipe, Less Scrolling', color: '#ffe9c4' },
+  },
+  {
+    id: 'abq', title: 'ABQ',
+    url: 'https://www.askbetterquestions.org', video: null, image: null,
+    sign: { text: '3 Questions to Media Literacy', color: '#f5a623' },
+  },
 ]
 
 export default function PosterGrid() {
@@ -66,8 +79,8 @@ export default function PosterGrid() {
   const scrollRight = useCallback(() => {
     const track = trackRef.current
     if (!track) return
-    const cardWidth = track.querySelector('.poster-grid__card')?.offsetWidth || 300
-    track.scrollBy({ left: cardWidth + 16, behavior: 'smooth' })
+    const itemWidth = track.querySelector('.poster-grid__item')?.offsetWidth || 300
+    track.scrollBy({ left: itemWidth + 16, behavior: 'smooth' })
   }, [])
 
   return (
@@ -75,54 +88,64 @@ export default function PosterGrid() {
       <div ref={trackRef} className="poster-grid__track">
         <div className="poster-grid__container">
           {POSTERS.map(poster => (
-            <div key={poster.id} className="poster-grid__card">
+            // Item wraps the card + sign as a column so the sign is flush below
+            <div key={poster.id} className="poster-grid__item">
 
-              {/* ── Visual layer: video > image > iframe > placeholder ── */}
-              {poster.video ? (
-                // Autoplay looping demo, slightly sped up, silent
-                <video
-                  className="poster-grid__video"
-                  src={poster.video}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  aria-hidden="true"
-                  ref={el => { if (el) el.playbackRate = 1.4 }}
-                />
-              ) : poster.image ? (
-                <img
-                  className="poster-grid__image"
-                  src={`${import.meta.env.BASE_URL}${poster.image}`}
-                  alt=""
-                  aria-hidden="true"
-                />
-              ) : poster.url ? (
-                // iframe is visual only — pointer-events disabled so it doesn't
-                // swallow scroll. Offset downward to skip past site header/nav.
-                <iframe
-                  src={poster.url}
-                  title={poster.title}
-                  className="poster-grid__iframe"
-                  tabIndex={-1}
-                  aria-hidden="true"
-                />
-              ) : (
-                <div className="poster-grid__placeholder" aria-hidden="true">
-                  <span className="poster-grid__placeholder-title">{poster.title}</span>
+              <div className="poster-grid__card">
+                {/* ── Visual layer: video > image > iframe > placeholder ── */}
+                {poster.video ? (
+                  <video
+                    className="poster-grid__video"
+                    src={poster.video}
+                    autoPlay muted loop playsInline
+                    aria-hidden="true"
+                    ref={el => { if (el) el.playbackRate = 1.4 }}
+                  />
+                ) : poster.image ? (
+                  <img
+                    className="poster-grid__image"
+                    src={`${import.meta.env.BASE_URL}${poster.image}`}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                ) : poster.url ? (
+                  <iframe
+                    src={poster.url}
+                    title={poster.title}
+                    className="poster-grid__iframe"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <div className="poster-grid__placeholder" aria-hidden="true">
+                    <span className="poster-grid__placeholder-title">{poster.title}</span>
+                  </div>
+                )}
+
+                {/* Click overlay — opens site in new tab */}
+                {poster.url && (
+                  <a
+                    href={poster.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="poster-grid__overlay"
+                    aria-label={`Visit ${poster.title} — opens in new tab`}
+                  />
+                )}
+              </div>
+
+              {/* ── Sign strip — marquee ticker below the card ── */}
+              <div
+                className="poster-grid__sign"
+                style={{ background: poster.sign.color }}
+                aria-hidden="true"
+              >
+                {/* Text doubled so the loop is seamless: animate -50% = one copy width */}
+                <div className="poster-grid__sign-track">
+                  <span>{poster.sign.text} &nbsp;·&nbsp; </span>
+                  <span>{poster.sign.text} &nbsp;·&nbsp; </span>
                 </div>
-              )}
-
-              {/* ── Click overlay — opens site in new tab (when URL exists) ── */}
-              {poster.url && (
-                <a
-                  href={poster.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="poster-grid__overlay"
-                  aria-label={`Visit ${poster.title} — opens in new tab`}
-                />
-              )}
+              </div>
 
             </div>
           ))}

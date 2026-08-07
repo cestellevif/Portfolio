@@ -37,21 +37,73 @@
   width: max-content;
 }
 
-/* ── Card — wide landscape poster window ── */
-.poster-grid__card {
-  /* Large fixed width so posters bleed off viewport — enables scroll */
-  width: clamp(340px, 38vw, 540px);
-  aspect-ratio: 3 / 2;
-  background: #ddd;
+/* ── Item — column wrapper: card on top, sign strip below ── */
+.poster-grid__item {
+  display: flex;
+  flex-direction: column;
   flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-  /* Gap between posters — thick black frame shows through */
+  width: clamp(340px, 38vw, 540px);
   margin: 0 10px;
 }
 
-.poster-grid__card:first-child { margin-left: 0; }
-.poster-grid__card:last-child  { margin-right: 0; }
+.poster-grid__item:first-child { margin-left: 0; }
+.poster-grid__item:last-child  { margin-right: 0; }
+
+/* ── Card — wide landscape poster window ── */
+.poster-grid__card {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: #ddd;
+  position: relative;
+  overflow: hidden;
+  /* Bottom border shared visually with sign's top border */
+  border-bottom: none;
+}
+
+/* ── Sign — marquee ticker strip below each card ── */
+/* 11px black border on all sides per Figma; no top border (card bottom serves as top) */
+.poster-grid__sign {
+  width: 100%;
+  height: 64px;
+  border: 11px solid var(--color-ink, #1a1a1a);
+  border-top: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Track — doubled text scrolls left; -50% = exactly one copy width → seamless loop */
+.poster-grid__sign-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: poster-marquee 14s linear infinite;
+  /* Pause on hover so users can read the full text */
+  will-change: transform;
+}
+
+.poster-grid__sign:hover .poster-grid__sign-track {
+  animation-play-state: paused;
+}
+
+.poster-grid__sign-track span {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink, #1a1a1a);
+  padding-left: 24px;
+}
+
+@keyframes poster-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster-grid__sign-track { animation: none; }
+}
 
 /* ── iframe — fills the card, scaled down to fit ── */
 /* --iframe-scale set in JS (card.offsetWidth / 1280).
