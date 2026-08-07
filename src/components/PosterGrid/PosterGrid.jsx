@@ -108,9 +108,9 @@ export default function PosterGrid() {
           {/* Animated light beams in the black frame padding around the cards */}
           <Beams
             beamWidth={4}
-            beamHeight={15}
+            beamHeight={30}
             beamNumber={11}
-            lightColor="#797979"
+            lightColor="#ffffff"
             speed={1}
             rotation={90}
           />
