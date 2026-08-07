@@ -37,38 +37,34 @@
   width: max-content;
 }
 
-/* ── Item — column wrapper: card on top, sign strip below ── */
-.poster-grid__item {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
+/* ── Card — wide landscape poster window ── */
+.poster-grid__card {
   width: clamp(340px, 38vw, 540px);
+  aspect-ratio: 3 / 2;
+  background: #ddd;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
   margin: 0 10px;
 }
 
-.poster-grid__item:first-child { margin-left: 0; }
-.poster-grid__item:last-child  { margin-right: 0; }
+.poster-grid__card:first-child { margin-left: 0; }
+.poster-grid__card:last-child  { margin-right: 0; }
 
-/* ── Card — wide landscape poster window ── */
-.poster-grid__card {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  background: #ddd;
-  position: relative;
-  overflow: hidden;
-  /* Bottom border shared visually with sign's top border */
-  border-bottom: none;
-}
-
-/* ── Sign — marquee ticker strip below each card ── */
-/* 11px black border on all sides per Figma; no top border (card bottom serves as top) */
+/* ── Sign — marquee ticker overlaid inside the card at the bottom ──
+   Covers the dead-zone viewport space. 11px top border separates it
+   from the site content above; card's own border frames left/right/bottom. */
 .poster-grid__sign {
-  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 64px;
-  border: 11px solid var(--color-ink, #1a1a1a);
+  border-top: 11px solid var(--color-ink, #1a1a1a);
   overflow: hidden;
   display: flex;
   align-items: center;
+  z-index: 1;
 }
 
 /* Track — doubled text scrolls left; -50% = exactly one copy width → seamless loop */
