@@ -6,6 +6,8 @@
 /* ── Section wrapper — relative for arrow positioning ── */
 .poster-grid {
   width: 100%;
+  /* Fill the full viewport below the header so the subway wall has no bottom cutoff */
+  min-height: 100dvh;
   padding: 48px 0 64px;
   position: relative;
 }

@@ -98,7 +98,7 @@ export default function PosterGrid() {
         lineWidth={1.5}
         maxOpacity={0.55}
         fillOpacity={0.04}
-        gridOpacity={0.09}
+        gridOpacity={0.18}
         clickPulse
         pulseSpeed={700}
       />

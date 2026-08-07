@@ -203,14 +203,30 @@ const CursorGrid = ({
     };
     wakeRef.current = wake;
 
+    // Listen on window so cursor works regardless of z-index stacking —
+    // elements on top of the canvas (e.g. poster track) would otherwise
+    // swallow pointer events before they reach the canvas container.
     const toLocal = e => {
       const rect = canvas.getBoundingClientRect();
       return [e.clientX - rect.left, e.clientY - rect.top];
     };
 
-    const onPointerMove = e => { energize(...toLocal(e)); wake(); };
+    const isOverCanvas = e => {
+      const rect = canvas.getBoundingClientRect();
+      return (
+        e.clientX >= rect.left && e.clientX <= rect.right &&
+        e.clientY >= rect.top  && e.clientY <= rect.bottom
+      );
+    };
+
+    const onPointerMove = e => {
+      if (!isOverCanvas(e)) return;
+      energize(...toLocal(e));
+      wake();
+    };
+
     const onPointerDown = e => {
-      if (!propsRef.current.clickPulse) return;
+      if (!propsRef.current.clickPulse || !isOverCanvas(e)) return;
       const [x, y] = toLocal(e);
       pulses.push({ x, y, t0: performance.now() });
       wake();
@@ -221,14 +237,15 @@ const CursorGrid = ({
     rebuild();
     wake();
 
-    container.addEventListener('pointermove', onPointerMove);
-    container.addEventListener('pointerdown', onPointerDown);
+    // Window-level listeners so z-index stacking doesn't block events
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerdown', onPointerDown);
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      container.removeEventListener('pointermove', onPointerMove);
-      container.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerdown', onPointerDown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cellSize]);
