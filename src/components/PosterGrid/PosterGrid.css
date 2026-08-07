@@ -49,11 +49,12 @@
   /* Animated diagonal shimmer simulates light catching the frame surface */
   background: linear-gradient(
     105deg,
-    #0d0d0d 0%,
-    #1a1a1a 30%,
-    #2e2b27 50%,
-    #1a1a1a 70%,
-    #0d0d0d 100%
+    #0a0a0a 0%,
+    #1a1a1a 25%,
+    #3a3633 48%,
+    #3a3633 52%,
+    #1a1a1a 75%,
+    #0a0a0a 100%
   );
   background-size: 300% 300%;
   animation: frame-shimmer 10s ease-in-out infinite;
