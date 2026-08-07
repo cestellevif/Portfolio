@@ -107,7 +107,7 @@ export default function PosterGrid() {
         <div className="poster-grid__container">
           {/* Animated color bends fill the black frame padding around the cards */}
           <ColorBends
-            colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
+            colors={["#ffffff", "#aaaaaa", "#555555"]}
             rotation={50}
             speed={0.2}
             scale={1}
