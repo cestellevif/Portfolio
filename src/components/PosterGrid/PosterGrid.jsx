@@ -4,6 +4,7 @@
 // Arrow button only appears when content overflows the viewport.
 
 import { useRef, useState, useCallback, useEffect } from 'react'
+import CursorGrid from '../CursorGrid/CursorGrid'
 import './PosterGrid.css'
 
 // Rendering priority per card: video → image → iframe (url) → placeholder
@@ -85,6 +86,22 @@ export default function PosterGrid() {
 
   return (
     <section className="poster-grid" aria-label="Featured projects">
+      {/* Interactive tile background — charcoal on cream, subtle lattice always visible */}
+      <CursorGrid
+        className="poster-grid__cursor-bg"
+        color="#2D2D2D"
+        cellSize={55}
+        radius={160}
+        falloff="smooth"
+        holdTime={500}
+        fadeDuration={900}
+        lineWidth={1.5}
+        maxOpacity={0.55}
+        fillOpacity={0.04}
+        gridOpacity={0.09}
+        clickPulse
+        pulseSpeed={700}
+      />
       <div ref={trackRef} className="poster-grid__track">
         <div className="poster-grid__container">
           {POSTERS.map(poster => (

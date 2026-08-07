@@ -10,6 +10,20 @@
   position: relative;
 }
 
+/* ── CursorGrid background — fills the full section behind the posters ── */
+.poster-grid__cursor-bg {
+  position: absolute !important;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Lift track and arrow above the canvas */
+.poster-grid__track,
+.poster-grid__arrow {
+  position: relative;
+  z-index: 1;
+}
+
 /* ── Scroll track — horizontal overflow, offset right ── */
 .poster-grid__track {
   overflow-x: auto;
