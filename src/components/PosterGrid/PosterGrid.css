@@ -54,73 +54,47 @@
 .poster-grid__card:last-child  { margin-right: 0; }
 
 /* ── iframe — fills the card, scaled down to fit ── */
-/* --iframe-scale is set in JS via ResizeObserver: card.offsetWidth / 1280.
-   transform-origin: top center + left: 50% centers the iframe horizontally
-   so sites with centered layouts show their content, not just the left edge. */
+/* --iframe-scale set in JS (card.offsetWidth / 1280).
+   --iframe-top set in JS (negative, in screen px) to crop past site nav.
+   Centered horizontally via left:50% + translateX(-50%). */
 .poster-grid__iframe {
   position: absolute;
-  top: 0;
+  top: var(--iframe-top, 0px);
   left: 50%;
   width: 1280px;
-  height: 853px; /* 1280 × (2/3) matches the 3:2 card aspect ratio */
+  height: 960px; /* taller than 3:2 so cropping top still fills the card */
   transform-origin: top center;
   transform: translateX(-50%) scale(var(--iframe-scale, 0.266));
   border: none;
   pointer-events: none; /* overlay handles all clicks */
 }
 
-/* ── Overlay — transparent click target on top of iframe ── */
-.poster-grid__overlay {
+/* ── Video — fills the card like object-fit: cover ── */
+.poster-grid__video {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 12px 14px;
-  text-decoration: none;
-  background: transparent;
-  transition: background 0.2s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.poster-grid__overlay:hover {
-  background: rgba(0, 0, 0, 0.18);
+/* ── Image — fills the card like object-fit: cover ── */
+.poster-grid__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.poster-grid__overlay:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: -3px;
-}
-
-/* ── Visit label — appears on hover ── */
-.poster-grid__visit-label {
-  font-family: var(--font-body);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--color-ink, #1a1a1a);
-  padding: 4px 10px;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.poster-grid__overlay:hover .poster-grid__visit-label,
-.poster-grid__overlay:focus-visible .poster-grid__visit-label {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ── Placeholder — for cards not yet linked ── */
+/* ── Placeholder — for cards with no content yet ── */
 .poster-grid__placeholder {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  background: #ccc;
+  background: #c8c4bc;
 }
 
 .poster-grid__placeholder-title {
@@ -128,16 +102,55 @@
   font-size: clamp(18px, 2.5vw, 28px);
   font-weight: 800;
   text-transform: uppercase;
-  color: var(--color-ink, #1a1a1a);
-  letter-spacing: 0.04em;
+  color: rgba(0,0,0,0.3);
+  letter-spacing: 0.06em;
 }
 
-.poster-grid__placeholder-sub {
-  font-family: var(--font-body);
-  font-size: 11px;
-  letter-spacing: 0.1em;
+/* ── Tagline banner — always-visible strip at the card bottom ── */
+.poster-grid__banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-ink, #1a1a1a);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(11px, 1.2vw, 15px);
+  font-weight: 800;
   text-transform: uppercase;
-  color: rgba(0,0,0,0.45);
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  line-height: 1.2;
+  /* Sits above the overlay so it's always readable */
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Overlay — transparent click target, sits above iframe/video/image ── */
+.poster-grid__overlay {
+  position: absolute;
+  inset: 0;
+  /* Leave room at bottom so banner stays visible and readable */
+  bottom: 36px;
+  text-decoration: none;
+  background: transparent;
+  transition: background 0.2s ease;
+  z-index: 2;
+}
+
+.poster-grid__overlay:hover {
+  background: rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+.poster-grid__overlay:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+}
+
+/* Inert overlay for cards with no URL */
+.poster-grid__overlay--inert {
+  pointer-events: none;
 }
 
 /* ── Arrow button — scroll control ── */

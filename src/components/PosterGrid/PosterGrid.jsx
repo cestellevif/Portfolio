@@ -6,11 +6,33 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
 import './PosterGrid.css'
 
-// url: null = placeholder (not yet linked). Add URL when the project is ready.
+// Rendering priority per card: video → image → iframe (url) → placeholder
+// Set video/image to a public/ path when ready; url opens on click.
 const POSTERS = [
-  { id: 'felt-well-met', title: 'Be Well Met', url: 'https://www.bewellmet.com' },
-  { id: 'simmer',        title: 'Simmer',       url: null },
-  { id: 'abq',           title: 'ABQ',          url: 'https://www.askbetterquestions.org' },
+  {
+    id: 'felt-well-met',
+    title: 'Be Well Met',
+    tagline: 'Robert's Rules Made Easy',
+    url: 'https://www.bewellmet.com',
+    video: null,
+    image: null,
+  },
+  {
+    id: 'simmer',
+    title: 'Simmer',
+    tagline: 'Chrome Extension — Coming Soon',
+    url: null,
+    video: null,   // swap in path like '/videos/simmer-demo.mp4' when ready
+    image: null,   // swap in path like '/images/simmer-poster.jpg' when ready
+  },
+  {
+    id: 'abq',
+    title: 'ABQ',
+    tagline: 'Three Questions to Media Literacy',
+    url: 'https://www.askbetterquestions.org',
+    video: null,
+    image: null,
+  },
 ]
 
 export default function PosterGrid() {
@@ -53,6 +75,9 @@ export default function PosterGrid() {
       cards.forEach(card => {
         const scale = card.offsetWidth / 1280
         card.style.setProperty('--iframe-scale', scale)
+        // Crop 80px of site content from the top (in iframe coordinates) to skip
+        // past typical site nav bars. In screen px: 80 * scale.
+        card.style.setProperty('--iframe-top', `${-80 * scale}px`)
       })
     }
 
@@ -75,37 +100,62 @@ export default function PosterGrid() {
         <div className="poster-grid__container">
           {POSTERS.map(poster => (
             <div key={poster.id} className="poster-grid__card">
-              {poster.url ? (
-                <>
-                  {/* iframe is visual only — pointer-events disabled so it doesn't
-                      swallow scroll. The overlay <a> handles all interaction. */}
-                  <iframe
-                    src={poster.url}
-                    title={poster.title}
-                    className="poster-grid__iframe"
-                    tabIndex={-1}
-                    aria-hidden="true"
-                  />
-                  {/* Overlay captures clicks and opens the site in a new tab */}
-                  <a
-                    href={poster.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="poster-grid__overlay"
-                    aria-label={`Visit ${poster.title} — opens in new tab`}
-                  >
-                    <span className="poster-grid__visit-label">
-                      {poster.title} ↗
-                    </span>
-                  </a>
-                </>
+
+              {/* ── Visual layer: video > image > iframe > placeholder ── */}
+              {poster.video ? (
+                // Autoplay looping demo, slightly sped up, silent
+                <video
+                  className="poster-grid__video"
+                  src={poster.video}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-hidden="true"
+                  ref={el => { if (el) el.playbackRate = 1.4 }}
+                />
+              ) : poster.image ? (
+                <img
+                  className="poster-grid__image"
+                  src={poster.image}
+                  alt=""
+                  aria-hidden="true"
+                />
+              ) : poster.url ? (
+                // iframe is visual only — pointer-events disabled so it doesn't
+                // swallow scroll. Offset downward to skip past site header/nav.
+                <iframe
+                  src={poster.url}
+                  title={poster.title}
+                  className="poster-grid__iframe"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                />
               ) : (
-                // Placeholder for cards not yet linked
-                <div className="poster-grid__placeholder" aria-label={`${poster.title} — coming soon`}>
+                <div className="poster-grid__placeholder" aria-hidden="true">
                   <span className="poster-grid__placeholder-title">{poster.title}</span>
-                  <span className="poster-grid__placeholder-sub">Coming soon</span>
                 </div>
               )}
+
+              {/* ── Tagline banner — always visible at the bottom ── */}
+              <div className="poster-grid__banner" aria-hidden="true">
+                {poster.tagline}
+              </div>
+
+              {/* ── Click overlay — opens site in new tab (when URL exists) ── */}
+              {poster.url ? (
+                <a
+                  href={poster.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="poster-grid__overlay"
+                  aria-label={`${poster.title} — ${poster.tagline}. Opens in new tab.`}
+                />
+              ) : (
+                // No link yet — non-interactive overlay keeps card consistent
+                <div className="poster-grid__overlay poster-grid__overlay--inert" aria-hidden="true" />
+              )}
+
             </div>
           ))}
         </div>
