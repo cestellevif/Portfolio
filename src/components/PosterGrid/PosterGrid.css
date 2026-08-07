@@ -181,10 +181,11 @@
   letter-spacing: 0.06em;
 }
 
-/* ── Overlay — transparent click target on top of content ── */
+/* ── Overlay — transparent click target; z-index 2 keeps it above the glass layer ── */
 .poster-grid__overlay {
   position: absolute;
   inset: 0;
+  z-index: 2;
   text-decoration: none;
   background: transparent;
   transition: background 0.2s ease;
