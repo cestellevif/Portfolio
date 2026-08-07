@@ -109,10 +109,10 @@ export default function PosterGrid() {
           <Beams
             beamWidth={1.4}
             beamHeight={15}
-            beamNumber={11}
+            beamNumber={36}
             lightColor="#bababa"
             speed={1.3}
-            noiseIntensity={1}
+            noiseIntensity={0.4}
             scale={0.2}
             rotation={109}
           />

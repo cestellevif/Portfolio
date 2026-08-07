@@ -1,4 +1,4 @@
-/* beams-container — applied directly to the R3F Canvas element.
+/* beams-container — applied directly to the R3F Canvas wrapper div.
    Must fill the parent absolutely so beams cover the entire black frame
    without disrupting the flex layout of poster cards. */
 .beams-container {
@@ -7,4 +7,11 @@
   width: 100% !important;
   height: 100% !important;
   pointer-events: none;
+}
+
+/* R3F renders a <canvas> inside the wrapper div — force it to fill too */
+.beams-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }
