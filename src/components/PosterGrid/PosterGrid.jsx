@@ -22,8 +22,8 @@ const POSTERS = [
     title: 'Simmer',
     tagline: 'Chrome Extension — Coming Soon',
     url: null,
-    video: null,   // swap in path like '/videos/simmer-demo.mp4' when ready
-    image: null,   // swap in path like '/images/simmer-poster.jpg' when ready
+    video: null,              // swap in 'images/simmer-demo.mp4' when ready
+    image: 'images/Simmer.png',
   },
   {
     id: 'abq',
@@ -117,7 +117,7 @@ export default function PosterGrid() {
               ) : poster.image ? (
                 <img
                   className="poster-grid__image"
-                  src={poster.image}
+                  src={`${import.meta.env.BASE_URL}${poster.image}`}
                   alt=""
                   aria-hidden="true"
                 />
