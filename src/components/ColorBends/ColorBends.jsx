@@ -181,7 +181,9 @@ export default function ColorBends({
     const renderer = new THREE.WebGLRenderer({
       antialias: false,
       powerPreference: 'high-performance',
-      alpha: true
+      // alpha:false so the canvas composites as fully opaque — transparent prop
+      // is handled by the shader's alpha output, not the WebGL context
+      alpha: false
     });
     rendererRef.current = renderer;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
