@@ -107,12 +107,14 @@ export default function PosterGrid() {
         <div className="poster-grid__container">
           {/* Animated light beams in the black frame padding around the cards */}
           <Beams
-            beamWidth={4}
-            beamHeight={30}
+            beamWidth={1.4}
+            beamHeight={15}
             beamNumber={11}
-            lightColor="#ffffff"
-            speed={1}
-            rotation={90}
+            lightColor="#bababa"
+            speed={1.3}
+            noiseIntensity={1}
+            scale={0.2}
+            rotation={109}
           />
           {POSTERS.map(poster => (
             <div key={poster.id} className="poster-grid__card">
