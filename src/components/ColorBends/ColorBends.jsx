@@ -186,7 +186,8 @@ export default function ColorBends({
     rendererRef.current = renderer;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setClearColor(0x000000, transparent ? 0 : 1);
+    // Match the poster frame background (#1a1a1a) so the opaque canvas blends seamlessly
+    renderer.setClearColor(0x1a1a1a, transparent ? 0 : 1);
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     renderer.domElement.style.display = 'block';
@@ -283,7 +284,7 @@ export default function ColorBends({
     material.uniforms.uColorCount.value = arr.length;
 
     material.uniforms.uTransparent.value = transparent ? 1 : 0;
-    if (renderer) renderer.setClearColor(0x000000, transparent ? 0 : 1);
+    if (renderer) renderer.setClearColor(0x1a1a1a, transparent ? 0 : 1);
   }, [
     rotation, autoRotate, speed, scale, frequency, warpStrength,
     mouseInfluence, parallax, noise, iterations, intensity, bandWidth,

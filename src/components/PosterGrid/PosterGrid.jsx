@@ -119,7 +119,7 @@ export default function PosterGrid() {
             iterations={1}
             intensity={1.4}
             bandWidth={3}
-            transparent
+            transparent={false}
             style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}
           />
           {POSTERS.map(poster => (
