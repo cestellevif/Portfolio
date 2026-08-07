@@ -54,23 +54,20 @@
 .poster-grid__card:last-child  { margin-right: 0; }
 
 /* ── iframe — fills the card, scaled down to fit ── */
-/* Scale = card-width / 1280px (iframe's native render width).
-   Stepped via media queries since CSS can't divide two lengths. */
+/* --iframe-scale is set in JS via ResizeObserver: card.offsetWidth / 1280.
+   transform-origin: top center + left: 50% centers the iframe horizontally
+   so sites with centered layouts show their content, not just the left edge. */
 .poster-grid__iframe {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
   width: 1280px;
   height: 853px; /* 1280 × (2/3) matches the 3:2 card aspect ratio */
-  transform-origin: top left;
-  transform: scale(0.266); /* default: ~340px card ÷ 1280 */
+  transform-origin: top center;
+  transform: translateX(-50%) scale(var(--iframe-scale, 0.266));
   border: none;
   pointer-events: none; /* overlay handles all clicks */
 }
-
-@media (min-width: 900px)  { .poster-grid__iframe { transform: scale(0.34); } }
-@media (min-width: 1100px) { .poster-grid__iframe { transform: scale(0.38); } }
-@media (min-width: 1400px) { .poster-grid__iframe { transform: scale(0.42); } }
 
 /* ── Overlay — transparent click target on top of iframe ── */
 .poster-grid__overlay {

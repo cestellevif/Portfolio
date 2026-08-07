@@ -42,6 +42,26 @@ export default function PosterGrid() {
     return () => track.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Compute exact iframe scale from actual card width so it fills the card precisely
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+    const cards = track.querySelectorAll('.poster-grid__card')
+    if (!cards.length) return
+
+    const updateScales = () => {
+      cards.forEach(card => {
+        const scale = card.offsetWidth / 1280
+        card.style.setProperty('--iframe-scale', scale)
+      })
+    }
+
+    updateScales()
+    const ro = new ResizeObserver(updateScales)
+    cards.forEach(card => ro.observe(card))
+    return () => ro.disconnect()
+  }, [])
+
   const scrollRight = useCallback(() => {
     const track = trackRef.current
     if (!track) return
