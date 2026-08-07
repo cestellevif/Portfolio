@@ -109,16 +109,16 @@ export default function PosterGrid() {
           <ColorBends
             colors={["#ffffff", "#aaaaaa", "#555555"]}
             rotation={50}
-            speed={0.2}
+            speed={0.04}
             scale={1}
             frequency={1}
-            warpStrength={1}
-            mouseInfluence={1}
-            noise={0.15}
-            parallax={0.5}
+            warpStrength={0.6}
+            mouseInfluence={0.3}
+            noise={0.06}
+            parallax={0.2}
             iterations={1}
-            intensity={1.5}
-            bandWidth={6}
+            intensity={0.9}
+            bandWidth={2}
             transparent
             style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}
           />
