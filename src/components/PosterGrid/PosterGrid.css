@@ -62,7 +62,7 @@
   top: 0;
   left: 50%;
   width: 1280px;
-  height: 960px; /* taller than 3:2 so cropping top still fills the card */
+  height: 853px; /* 1280 × 2/3 — matches the card's 3:2 aspect ratio exactly */
   transform-origin: top center;
   transform: translateX(-50%) scale(var(--iframe-scale, 0.266));
   border: none;
