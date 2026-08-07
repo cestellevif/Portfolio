@@ -5,7 +5,6 @@
 
 import { useRef, useState, useCallback, useEffect } from 'react'
 import CursorGrid from '../CursorGrid/CursorGrid'
-import GlassSurface from '../GlassSurface/GlassSurface'
 import './PosterGrid.css'
 
 // Rendering priority per card: video → image → iframe (url) → placeholder
@@ -137,23 +136,6 @@ export default function PosterGrid() {
                   <span className="poster-grid__placeholder-title">{poster.title}</span>
                 </div>
               )}
-
-              {/* ── Glass texture — refracts the poster content like a glass pane ── */}
-              <GlassSurface
-                width="100%"
-                height="100%"
-                borderRadius={0}
-                distortionScale={-60}
-                redOffset={0}
-                greenOffset={8}
-                blueOffset={18}
-                brightness={50}
-                opacity={0.8}
-                blur={10}
-                backgroundOpacity={0}
-                saturation={1}
-                style={{ position: 'absolute', inset: 0, zIndex: 0 }}
-              />
 
               {/* ── Sign — overlaid at the bottom of the card, inside the 3:2 frame ──
                   Covers the dead-zone viewport space at the bottom of each site. */}
