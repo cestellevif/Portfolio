@@ -31,21 +31,22 @@ const POSTERS = [
 export default function PosterGrid() {
   const trackRef = useRef(null)
   const sectionRef = useRef(null)
+  const frameRef = useRef(null)
   const [canScroll, setCanScroll] = useState(false)
 
-  // Flashlight — track cursor position relative to the section so the
-  // radial-gradient hole follows the mouse across the full wall + posters.
+  // Frame spotlight — track cursor position relative to the black frame container
+  // so the irregular glow blob follows the mouse across the frame padding.
   const handleMouseMove = useCallback((e) => {
-    const rect = sectionRef.current?.getBoundingClientRect()
+    const rect = frameRef.current?.getBoundingClientRect()
     if (!rect) return
-    sectionRef.current.style.setProperty('--spotlight-x', `${e.clientX - rect.left}px`)
-    sectionRef.current.style.setProperty('--spotlight-y', `${e.clientY - rect.top}px`)
+    frameRef.current.style.setProperty('--frame-x', `${e.clientX - rect.left}px`)
+    frameRef.current.style.setProperty('--frame-y', `${e.clientY - rect.top}px`)
   }, [])
 
-  // Push spotlight off-screen when cursor leaves so the section returns to full dim
+  // Push glow off-screen when cursor leaves the section
   const handleMouseLeave = useCallback(() => {
-    sectionRef.current?.style.setProperty('--spotlight-x', '-2000px')
-    sectionRef.current?.style.setProperty('--spotlight-y', '-2000px')
+    frameRef.current?.style.setProperty('--frame-x', '-2000px')
+    frameRef.current?.style.setProperty('--frame-y', '-2000px')
   }, [])
 
   // Show arrow only when the track overflows
@@ -125,7 +126,7 @@ export default function PosterGrid() {
         pulseSpeed={700}
       />
       <div ref={trackRef} className="poster-grid__track">
-        <div className="poster-grid__container">
+        <div ref={frameRef} className="poster-grid__container">
 {POSTERS.map(poster => (
             <div key={poster.id} className="poster-grid__card">
 

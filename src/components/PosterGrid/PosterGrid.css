@@ -12,23 +12,27 @@
   position: relative;
 }
 
-/* ── Flashlight — additive warm light at the cursor position ──
-   mix-blend-mode: screen brightens everything under the gradient — most
-   noticeable on the dark frame and poster areas. Wall stays bright; spotlight
-   pushes the lit area toward white. Default position is off-screen. */
-.poster-grid::after {
+/* ── Frame spotlight — subtle warm glow on the black frame only ──
+   Two offset ellipses form an irregular blob (not a perfect circle) that
+   follows the cursor across the frame padding. Scoped to the container via
+   overflow: hidden. mix-blend-mode: screen on matte black is very readable
+   even at low opacity. Poster cards sit at z-index 1 so they clip above this. */
+.poster-grid__container::after {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 10;
+  z-index: 0;
   pointer-events: none;
   mix-blend-mode: screen;
-  background: radial-gradient(
-    circle 380px at var(--spotlight-x, -2000px) var(--spotlight-y, -2000px),
-    rgba(255, 248, 210, 0.72) 0%,
-    rgba(255, 245, 190, 0.38) 40%,
-    transparent 100%
-  );
+  background:
+    radial-gradient(
+      ellipse 240px 190px at calc(var(--frame-x, -2000px) - 20px) calc(var(--frame-y, -2000px) + 14px),
+      rgba(255, 244, 200, 0.28) 0%, transparent 100%
+    ),
+    radial-gradient(
+      ellipse 170px 230px at calc(var(--frame-x, -2000px) + 28px) calc(var(--frame-y, -2000px) - 16px),
+      rgba(255, 235, 160, 0.2) 0%, transparent 100%
+    );
 }
 
 /* ── CursorGrid background — fills the full section behind the posters ── */
