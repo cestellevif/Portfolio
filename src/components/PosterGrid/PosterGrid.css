@@ -12,6 +12,24 @@
   position: relative;
 }
 
+/* ── Flashlight — dark room overlay with a spotlight hole at the cursor ──
+   ::after sits above everything (pointer-events none so clicks pass through).
+   --spotlight-x/y are set inline by onMouseMove; default is off-screen so the
+   section starts unlit until the cursor enters. */
+.poster-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 320px at var(--spotlight-x, -2000px) var(--spotlight-y, -2000px),
+    transparent 0%,
+    transparent 25%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+}
+
 /* ── CursorGrid background — fills the full section behind the posters ── */
 .poster-grid__cursor-bg {
   position: absolute !important;

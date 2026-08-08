@@ -30,7 +30,23 @@ const POSTERS = [
 
 export default function PosterGrid() {
   const trackRef = useRef(null)
+  const sectionRef = useRef(null)
   const [canScroll, setCanScroll] = useState(false)
+
+  // Flashlight — track cursor position relative to the section so the
+  // radial-gradient hole follows the mouse across the full wall + posters.
+  const handleMouseMove = useCallback((e) => {
+    const rect = sectionRef.current?.getBoundingClientRect()
+    if (!rect) return
+    sectionRef.current.style.setProperty('--spotlight-x', `${e.clientX - rect.left}px`)
+    sectionRef.current.style.setProperty('--spotlight-y', `${e.clientY - rect.top}px`)
+  }, [])
+
+  // Push spotlight off-screen when cursor leaves so the section returns to full dim
+  const handleMouseLeave = useCallback(() => {
+    sectionRef.current?.style.setProperty('--spotlight-x', '-2000px')
+    sectionRef.current?.style.setProperty('--spotlight-y', '-2000px')
+  }, [])
 
   // Show arrow only when the track overflows
   const checkOverflow = useCallback(() => {
@@ -85,7 +101,13 @@ export default function PosterGrid() {
   }, [])
 
   return (
-    <section className="poster-grid" aria-label="Featured projects">
+    <section
+      ref={sectionRef}
+      className="poster-grid"
+      aria-label="Featured projects"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Interactive tile background — charcoal on cream, subtle lattice always visible */}
       <CursorGrid
         className="poster-grid__cursor-bg"
